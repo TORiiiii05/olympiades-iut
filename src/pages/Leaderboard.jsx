@@ -110,7 +110,7 @@ export default function Leaderboard() {
                       {MEDAL[row.rank] ?? row.rank}
                     </td>
                     <td className="cell-player">
-                      <PlayerAvatar player={row} size={34} />
+                      <PlayerAvatar player={row} size={68} />
                       <span className="player-name">{row.name}</span>
                     </td>
                     <td className="cell-total">{row.total}</td>

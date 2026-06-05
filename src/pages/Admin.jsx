@@ -267,7 +267,7 @@ export default function Admin() {
             <ul className="item-list">
               {players.map(player => (
                 <li key={player.id} className="item-row">
-                  <PlayerAvatar player={player} size={42} />
+                  <PlayerAvatar player={player} size={84} />
                   <span className="item-name">{player.name}</span>
                   <div className="item-actions">
                     <label className="avatar-btn" title="Changer la photo">
@@ -388,7 +388,7 @@ export default function Admin() {
                   <div className="score-rows">
                     {players.map(player => (
                       <div key={player.id} className="score-row">
-                        <PlayerAvatar player={player} size={30} />
+                        <PlayerAvatar player={player} size={60} />
                         <span className="score-player-name">{player.name}</span>
                         <input
                           type="number"
