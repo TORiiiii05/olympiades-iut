@@ -45,19 +45,27 @@ export default function Leaderboard() {
   const rows = players
     .map(player => {
       let total = 0
+      let played = 0
       const byEvent = {}
       for (const ev of events) {
         const pts = scoreMap[player.id]?.[ev.id]
         byEvent[ev.id] = pts ?? null
-        if (pts != null) total += pts
+        if (pts != null && pts > 0) { total += pts; played++ }
+        else if (pts != null) total += pts
       }
-      return { ...player, total, byEvent }
+      const avg = played > 0 ? total / played : null
+      return { ...player, total, avg, byEvent }
     })
-    .sort((a, b) => b.total - a.total)
+    .sort((a, b) => {
+      if (b.avg == null && a.avg == null) return 0
+      if (b.avg == null) return -1
+      if (a.avg == null) return 1
+      return b.avg - a.avg
+    })
 
   let currentRank = 1
   const ranked = rows.map((row, i) => {
-    if (i > 0 && row.total < rows[i - 1].total) currentRank = i + 1
+    if (i > 0 && row.avg !== rows[i - 1].avg) currentRank = i + 1
     return { ...row, rank: currentRank }
   })
 
@@ -93,6 +101,7 @@ export default function Leaderboard() {
                 <th className="col-rank">Rang</th>
                 <th className="col-player">Joueur</th>
                 <th className="col-total">Total</th>
+                <th className="col-avg">Moy.</th>
                 {events.map(ev => (
                   <th key={ev.id} className="col-event">
                     {ev.emoji && <span className="ev-emoji">{ev.emoji}</span>}
@@ -114,6 +123,11 @@ export default function Leaderboard() {
                       <span className="player-name">{row.name}</span>
                     </td>
                     <td className="cell-total">{row.total}</td>
+                    <td className="cell-avg">
+                      {row.avg != null
+                        ? row.avg % 1 === 0 ? row.avg : row.avg.toFixed(2)
+                        : <span className="absent-mark">—</span>}
+                    </td>
                     {events.map(ev => (
                       <td key={ev.id} className="cell-score">
                         {row.byEvent[ev.id] != null

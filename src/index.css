@@ -212,11 +212,13 @@ body {
 .col-rank   { width: 52px; }
 .col-player { text-align: left; min-width: 140px; }
 .col-total  { width: 64px; }
+.col-avg    { width: 70px; }
 .col-event  { min-width: 90px; font-size: 0.75rem; }
 
 .cell-rank   { font-size: 1.3rem; }
 .cell-player { text-align: left; }
 .cell-total  { font-weight: 800; font-size: 1rem; }
+.cell-avg    { font-weight: 700; font-size: 0.95rem; color: var(--blue); }
 .cell-score  { color: var(--text); }
 
 .player-name {
